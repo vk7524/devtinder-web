@@ -3,12 +3,10 @@ import EditProfile from "./EditProfile"
 import UserCards from "./UserCards"
 const Profile = () => {
     const { user } = useSelector((state) => state?.userSlice)
-    const feed = useSelector((state) => state?.feed?.feed);
 
     return (
-        <div className="grid justify-items-center">
+        <div className="grid grid-cols-2 justify-items-center p-3">
             <EditProfile user={user} />
-            <UserCards feed={feed}/>
         </div>
     )
 }

@@ -4,37 +4,39 @@ import Navbar from "./Navbar"
 import Footer from "./Footer"
 import axios from "axios"
 import { BASE_URL } from "../utils/constant";
-import {addUser} from "../slice/userSlice"
+import { addUser } from "../slice/userSlice"
 import { useEffect } from "react"
 
 
 const Body = () => {
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const userData = useSelector((state) => state?.userSlice?.user);
-    console.log(userData, "userData");
-    
+    // console.log(userData, "userData");
+
     const fetchUser = async () => {
-       try{
-        const res = await axios.get(BASE_URL + "/profile/view", {withCredentials:true})
-        dispatch(addUser(res.data))
-       } catch(err){
-        console.log(err, "error");
-        if(err.response?.status === 401){
-            navigate("/login")
+        try {
+            const res = await axios.get(BASE_URL + "/profile/view", { withCredentials: true })
+            dispatch(addUser(res.data))
+        } catch (err) {
+            console.log(err, "error");
+            if (err.response?.status === 401) {
+                navigate("/login")
+            }
         }
-       }
     }
     useEffect(() => {
-        if(!userData){
+        if (!userData) {
             fetchUser()
         }
-    },[])
+    }, [])
     return (
         <>
-            <Navbar />
-            <Outlet />
-            <Footer />
+            <div className="h-screen">
+                <div><Navbar /></div>
+                <div className={`h-[calc(100vh_-_120px)] overflow-y-auto`}> <Outlet /></div>
+                <div><Footer /></div>
+            </div>
         </>
     )
 }

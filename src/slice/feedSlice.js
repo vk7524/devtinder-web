@@ -12,7 +12,7 @@ export const feedSlice = createSlice({
             state.feed = action.payload
         },
         removeFeed : (state, action) => {
-            state.feed = []
+            state.feed = state.feed.filter(feed => feed._id !== action.payload)
         }
     }
 })
